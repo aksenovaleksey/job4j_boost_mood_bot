@@ -1,12 +1,13 @@
 package ru.job4j.bmb.services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.BeanNameAware;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 
 @Service
-public class MoodService {
+public class MoodService implements BeanNameAware {
 
     @PostConstruct
     public void init() {
@@ -16,5 +17,10 @@ public class MoodService {
     @PreDestroy
     public void destroy() {
         System.out.println("MoodService destroyed");
+    }
+
+    @Override
+    public void setBeanName(String name) {
+        System.out.println("Bean name: " + name);
     }
 }
