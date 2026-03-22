@@ -1,6 +1,6 @@
 package ru.job4j.bmb;
 
-import ru.job4j.bmb.model.Content;
+import ru.job4j.bmb.content.Content;  // ← Верный пакет!
 import ru.job4j.bmb.services.BotCommandHandler;
 import ru.job4j.bmb.services.TelegramBotService;
 
