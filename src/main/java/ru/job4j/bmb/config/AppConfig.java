@@ -21,7 +21,6 @@ public class AppConfig {
     @Value("${app.timeout}")
     private int timeout;
 
-    // Геттеры для доступа к значениям
     public String getBotName() {
         return botName;
     }
@@ -50,3 +49,4 @@ public class AppConfig {
         System.out.println("Timeout: " + timeout);
     }
 }
+
