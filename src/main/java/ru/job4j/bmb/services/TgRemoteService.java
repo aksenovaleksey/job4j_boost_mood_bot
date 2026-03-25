@@ -46,7 +46,7 @@ public class TgRemoteService extends TelegramLongPollingBot {
         return botName;
     }
 
-    private void send(SendMessage message) {
+    public void send(SendMessage message) {
         try {
             execute(message);
         } catch (TelegramApiException e) {
