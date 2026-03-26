@@ -16,7 +16,12 @@ public class User {
     @Column(name = "chat_id")
     private long chatId;
 
-    // Getters and setters...
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public long getClientId() { return clientId; }
+    public void setClientId(long clientId) { this.clientId = clientId; }
+    public long getChatId() { return chatId; }
+    public void setChatId(long chatId) { this.chatId = chatId; }
 
     @Override
     public boolean equals(Object o) {
