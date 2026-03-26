@@ -9,6 +9,7 @@ import jakarta.annotation.PreDestroy;
 
 @Service
 public class BotCommandHandler implements BeanNameAware {
+    public BotCommandHandler() {}
 
     @PostConstruct
     public void init() {

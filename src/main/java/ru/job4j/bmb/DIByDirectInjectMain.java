@@ -11,3 +11,4 @@ public class DIByDirectInjectMain {
         tg.receive(new Content(999L).setText("Тестовое сообщение"));
     }
 }
+
