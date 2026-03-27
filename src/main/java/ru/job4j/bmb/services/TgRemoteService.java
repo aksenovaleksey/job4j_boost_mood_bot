@@ -4,8 +4,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ru.job4j.bmb.content.Content;
+
+import java.util.Optional;
 
 @Service
 public class TgRemoteService extends TelegramLongPollingBot {
@@ -14,15 +19,18 @@ public class TgRemoteService extends TelegramLongPollingBot {
     private final String botToken;
     private final TgUI tgUI;
     private final TgResponseHandler tgResponseHandler;
+    private final BotCommandHandler botCommandHandler;
 
     public TgRemoteService(@Value("${telegram.bot.name}") String botName,
                            @Value("${telegram.bot.token}") String botToken,
                            TgUI tgUI,
-                           TgResponseHandler tgResponseHandler) {
+                           TgResponseHandler tgResponseHandler,
+                           BotCommandHandler botCommandHandler) {
         this.botName = botName;
         this.botToken = botToken;
         this.tgUI = tgUI;
         this.tgResponseHandler = tgResponseHandler;
+        this.botCommandHandler = botCommandHandler;
     }
 
     @Override
@@ -54,27 +62,32 @@ public class TgRemoteService extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasCallbackQuery()) {
-            var callbackQuery = update.getCallbackQuery();
-            var data = callbackQuery.getData();
-            var chatId = callbackQuery.getMessage().getChatId();
-
-            Long moodId = null;
-            try {
-                moodId = Long.valueOf(data);
-            } catch (NumberFormatException e) {
-                moodId = -1L;
-            }
-
-            SendMessage response = new SendMessage();
-            response.setChatId(String.valueOf(chatId));
-            response.setText(tgResponseHandler.getResponse(moodId));
-            send(response);
+            CallbackQuery callback = update.getCallbackQuery();
+            botCommandHandler.handleCallback(callback)
+                    .ifPresent(this::sendContent);
             return;
         }
 
         if (update.hasMessage() && update.getMessage().hasText()) {
-            long chatId = update.getMessage().getChatId();
-            send(sendButtons(chatId));
+            Message message = update.getMessage();
+            botCommandHandler.commands(message)
+                    .ifPresent(this::sendContent);
+            return;
         }
+    }
+
+    private void sendContent(Content content) {
+        SendMessage message = new SendMessage();
+        message.setChatId(String.valueOf(content.getChatId()));
+
+        if (content.getText() != null && !content.getText().isEmpty()) {
+            message.setText(content.getText());
+        }
+
+        if (content.getMarkup() != null) {
+            message.setReplyMarkup(content.getMarkup());
+        }
+
+        send(message);
     }
 }

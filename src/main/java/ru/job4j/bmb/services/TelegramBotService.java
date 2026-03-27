@@ -6,6 +6,7 @@ import ru.job4j.bmb.content.Content;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import java.util.Optional;
 
 @Service
 public class TelegramBotService implements BeanNameAware {
@@ -26,7 +27,12 @@ public class TelegramBotService implements BeanNameAware {
     }
 
     public void receive(Content content) {
-        handler.receive(content);
+        Optional<Content> result = handler.receive(content);
+        result.ifPresent(this::sendContent);
+    }
+
+    private void sendContent(Content content) {
+        System.out.println("Sending content to chat: " + content.getChatId());
     }
 
     @Override

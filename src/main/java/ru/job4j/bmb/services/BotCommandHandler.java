@@ -1,32 +1,76 @@
 package ru.job4j.bmb.services;
 
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.BeanNameAware;
+import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import ru.job4j.bmb.content.Content;
+import ru.job4j.bmb.model.User;
+import ru.job4j.bmb.repository.UserRepository;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
+import java.util.Optional;
 
 @Service
-public class BotCommandHandler implements BeanNameAware {
-    public BotCommandHandler() {}
+public class BotCommandHandler {
 
-    @PostConstruct
-    public void init() {
-        System.out.println("BotCommandHandler initialized");
+    private final UserRepository userRepository;
+    private final MoodService moodService;
+    private final TgUI tgUI;
+
+    public BotCommandHandler(UserRepository userRepository,
+                             MoodService moodService,
+                             TgUI tgUI) {
+        this.userRepository = userRepository;
+        this.moodService = moodService;
+        this.tgUI = tgUI;
     }
 
-    @PreDestroy
-    public void destroy() {
-        System.out.println("BotCommandHandler destroyed");
+    public Optional<Content> commands(Message message) {
+        if (message == null || !message.hasText()) {
+            return Optional.empty();
+        }
+
+        String text = message.getText().trim();
+        long chatId = message.getChatId();
+        Long clientId = message.getFrom().getId();
+
+        return switch (text) {
+            case "/start" -> handleStartCommand(chatId, clientId);
+            case "/week_mood_log" -> moodService.weekMoodLogCommand(chatId, clientId);
+            case "/month_mood_log" -> moodService.monthMoodLogCommand(chatId, clientId);
+            case "/award" -> moodService.awards(chatId, clientId);
+            default -> Optional.empty();
+        };
     }
 
-    void receive(Content content) {
-        System.out.println(content);
+    public Optional<Content> handleCallback(CallbackQuery callback) {
+        Long moodId;
+        try {
+            moodId = Long.valueOf(callback.getData());
+        } catch (NumberFormatException e) {
+            return Optional.empty();
+        }
+
+        var user = userRepository.findByChatIdAndClientId(
+                callback.getMessage().getChatId(),
+                callback.getFrom().getId()
+        );
+
+        return user.map(value -> moodService.chooseMood(value, moodId));
     }
 
-    @Override
-    public void setBeanName(String name) {
-        System.out.println("Bean name: " + name);
+    public Optional<Content> receive(Content content) {
+        return Optional.empty();
+    }
+
+    private Optional<Content> handleStartCommand(long chatId, Long clientId) {
+        var user = new User();
+        user.setClientId(clientId);
+        user.setChatId(chatId);
+        userRepository.save(user);
+
+        var content = new Content(user.getChatId());
+        content.setText("Как настроение?");
+        content.setMarkup(tgUI.buildButtons());
+        return Optional.of(content);
     }
 }
