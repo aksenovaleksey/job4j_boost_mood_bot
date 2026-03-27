@@ -32,7 +32,13 @@ public class DIByDirectInjectMain {
         TgUI tgUI = new TgUI(moodRepository);
 
         var handler = new BotCommandHandler(userRepository, moodService, tgUI);
-        var tg = new TelegramBotService(handler);
+
+        var tg = new TelegramBotService(
+                "job4j_boost_mood_bot",
+                "8670787009:AAHmtSHuxgyU6JNTutr0vg76Mm3zTKF1hww",
+                handler
+        );
+
         tg.receive(new Content(999L).setText("Тестовое сообщение"));
-        }
+    }
 }

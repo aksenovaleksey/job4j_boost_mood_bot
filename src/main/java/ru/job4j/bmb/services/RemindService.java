@@ -2,7 +2,7 @@ package ru.job4j.bmb.services;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import ru.job4j.bmb.content.Content;
 import ru.job4j.bmb.model.User;
 import ru.job4j.bmb.repository.UserRepository;
 
@@ -11,12 +11,11 @@ import java.util.List;
 @Service
 public class RemindService {
 
-    private final TgRemoteService tgRemoteService;
+    private final SentContent sentContent;
     private final UserRepository userRepository;
 
-    public RemindService(TgRemoteService tgRemoteService,
-                         UserRepository userRepository) {
-        this.tgRemoteService = tgRemoteService;
+    public RemindService(SentContent sentContent, UserRepository userRepository) {
+        this.sentContent = sentContent;
         this.userRepository = userRepository;
     }
 
@@ -24,12 +23,8 @@ public class RemindService {
     public void ping() {
         List<User> users = userRepository.findAll();
         for (User user : users) {
-            SendMessage message = new SendMessage();
-            message.setChatId(String.valueOf(user.getChatId()));
-            message.setText("Ping");
-            tgRemoteService.send(message);
+            Content content = new Content(user.getChatId()).setText("Ping");
+            sentContent.sent(content);
         }
     }
 }
-
-
