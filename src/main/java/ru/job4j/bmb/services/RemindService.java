@@ -4,26 +4,42 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.job4j.bmb.content.Content;
 import ru.job4j.bmb.model.User;
-import ru.job4j.bmb.repository.UserRepository;
+import ru.job4j.bmb.repository.MoodLogRepository;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 @Service
 public class RemindService {
-
     private final SentContent sentContent;
-    private final UserRepository userRepository;
+    private final MoodLogRepository moodLogRepository;
+    private final TgUI tgUI;
 
-    public RemindService(SentContent sentContent, UserRepository userRepository) {
+    public RemindService(SentContent sentContent,
+                         MoodLogRepository moodLogRepository,
+                         TgUI tgUI) {
         this.sentContent = sentContent;
-        this.userRepository = userRepository;
+        this.moodLogRepository = moodLogRepository;
+        this.tgUI = tgUI;
     }
 
-    @Scheduled(fixedRateString = "${remind.period}")
-    public void ping() {
-        List<User> users = userRepository.findAll();
-        for (User user : users) {
-            Content content = new Content(user.getChatId()).setText("Ping");
+    @Scheduled(fixedRateString = "${recommendation.alert.period}")
+    public void remindUsers() {
+        var startOfDay = LocalDate.now()
+                .atStartOfDay(ZoneId.systemDefault())
+                .toInstant()
+                .toEpochMilli();
+        var endOfDay = LocalDate.now()
+                .plusDays(1)
+                .atStartOfDay(ZoneId.systemDefault())
+                .toInstant()
+                .toEpochMilli() - 1;
+
+        for (var user : moodLogRepository.findUsersWhoDidNotVoteToday(startOfDay, endOfDay)) {
+            var content = new Content(user.getChatId());
+            content.setText("Как настроение?");
+            content.setMarkup(tgUI.buildButtons());
             sentContent.sent(content);
         }
     }

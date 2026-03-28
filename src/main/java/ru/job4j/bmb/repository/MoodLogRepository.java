@@ -9,7 +9,10 @@ import java.util.List;
 
 @Repository
 public interface MoodLogRepository extends CrudRepository<MoodLog, Long> {
-    List<MoodLog> findAll();
+    @Override
+    List<MoodLog> findAll();  // ← Обязательно List
+
     List<MoodLog> findByUser(User user);
     List<MoodLog> findByUserAndCreatedAtAfter(User user, Long timestamp);
+    List<User> findUsersWhoDidNotVoteToday(long startOfDay, long endOfDay);
 }

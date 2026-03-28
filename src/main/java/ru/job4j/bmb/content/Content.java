@@ -15,12 +15,24 @@ public class Content {
         this.chatId = chatId;
     }
 
-    public Long getChatId() { return chatId; }
-    public String getText() { return text; }
-    public InputFile getPhoto() { return photo; }
-    public InputFile getAudio() { return audio; }
-    public InputFile getVideo() { return video; }
-    public InlineKeyboardMarkup getMarkup() { return markup; }
+    public Long getChatId() {
+        return chatId;
+    }
+    public String getText() {
+        return text;
+    }
+    public InputFile getPhoto() {
+        return photo;
+    }
+    public InputFile getAudio() {
+        return audio;
+    }
+    public InputFile getVideo() {
+        return video;
+    }
+    public InlineKeyboardMarkup getMarkup() {
+        return markup;
+    }
 
     public Content setText(String text) {
         this.text = text;

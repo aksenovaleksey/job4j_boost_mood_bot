@@ -26,14 +26,26 @@ public class User {
         this.chatId = chatId;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public long getClientId() { return clientId; }
-    public void setClientId(long clientId) { this.clientId = clientId; }
+    public long getClientId() {
+        return clientId;
+    }
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
+    }
 
-    public long getChatId() { return chatId; }
-    public void setChatId(long chatId) { this.chatId = chatId; }
+    public long getChatId() {
+        return chatId;
+    }
+    public void setChatId(long chatId) {
+        this.chatId = chatId;
+    }
 
     @Override
     public String toString() {

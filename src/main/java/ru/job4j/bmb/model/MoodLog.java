@@ -28,15 +28,31 @@ public class MoodLog {
         this.createdAt = createdAt;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-    public Mood getMood() { return mood; }
-    public void setMood(Mood mood) { this.mood = mood; }
+    public Mood getMood() {
+        return mood;
+    }
+    public void setMood(Mood mood) {
+        this.mood = mood;
+    }
 
-    public Long getCreatedAt() { return createdAt; }
-    public void setCreatedAt(Long createdAt) { this.createdAt = createdAt; }
+    public Long getCreatedAt() {
+        return createdAt;
+    }
+    public void setCreatedAt(Long createdAt) {
+        this.createdAt = createdAt;
+    }
 }

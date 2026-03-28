@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface MoodRepository extends CrudRepository<Mood, Long> {
-    List<Mood> findAll();
+    @Override
+    List<Mood> findAll();  // ← Обязательно List, не Iterable
 }

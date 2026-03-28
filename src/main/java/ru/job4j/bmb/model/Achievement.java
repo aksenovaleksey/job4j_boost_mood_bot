@@ -28,17 +28,33 @@ public class Achievement {
         this.awardedAt = awardedAt;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-    public Award getAward() { return award; }
-    public void setAward(Award award) { this.award = award; }
+    public Award getAward() {
+        return award;
+    }
+    public void setAward(Award award) {
+        this.award = award;
+    }
 
-    public Long getAwardedAt() { return awardedAt; }
-    public void setAwardedAt(Long awardedAt) { this.awardedAt = awardedAt; }
+    public Long getAwardedAt() {
+        return awardedAt;
+    }
+    public void setAwardedAt(Long awardedAt) {
+        this.awardedAt = awardedAt;
+    }
 
     public String getName() {
         return award != null ? award.getName() : "Unknown";
