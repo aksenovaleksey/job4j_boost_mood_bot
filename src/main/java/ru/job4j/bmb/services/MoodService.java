@@ -1,7 +1,9 @@
 package ru.job4j.bmb.services;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import ru.job4j.bmb.content.Content;
+import ru.job4j.bmb.event.MoodSelectedEvent;
 import ru.job4j.bmb.model.Achievement;
 import ru.job4j.bmb.model.Award;
 import ru.job4j.bmb.model.Mood;
@@ -29,6 +31,7 @@ public class MoodService {
     private final AchievementRepository achievementRepository;
     private final AwardRepository awardRepository;
     private final MoodRepository moodRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     private final DateTimeFormatter formatter = DateTimeFormatter
             .ofPattern("dd-MM-yyyy HH:mm")
@@ -39,13 +42,15 @@ public class MoodService {
                        UserRepository userRepository,
                        AchievementRepository achievementRepository,
                        AwardRepository awardRepository,
-                       MoodRepository moodRepository) {
+                       MoodRepository moodRepository,
+                       ApplicationEventPublisher eventPublisher) {
         this.moodLogRepository = moodLogRepository;
         this.recommendationEngine = recommendationEngine;
         this.userRepository = userRepository;
         this.achievementRepository = achievementRepository;
         this.awardRepository = awardRepository;
         this.moodRepository = moodRepository;
+        this.eventPublisher = eventPublisher;
     }
 
     public Content chooseMood(User user, Long moodId) {
@@ -58,7 +63,7 @@ public class MoodService {
         log.setCreatedAt(Instant.now().getEpochSecond());
         moodLogRepository.save(log);
 
-        checkAndAwardAchievements(user);
+        eventPublisher.publishEvent(new MoodSelectedEvent(this, user, moodId));
 
         return recommendationEngine.recommendFor(user.getChatId(), moodId);
     }
@@ -125,35 +130,5 @@ public class MoodService {
         });
 
         return Optional.of(new Content(chatId).setText(sb.toString()));
-    }
-
-    private void checkAndAwardAchievements(User user) {
-        List<MoodLog> allLogs = moodLogRepository.findByUser(user);
-
-        long positiveDays = allLogs.stream()
-                .filter(log -> log.getMood() != null && Boolean.TRUE.equals(log.getMood().getIsPositive()))
-                .map(MoodLog::getCreatedAt)
-                .distinct()
-                .count();
-
-        if (positiveDays == 0) return;
-
-        List<Award> allAwards = awardRepository.findAll();
-        List<Achievement> userAchievements = achievementRepository.findByUser(user);
-        List<Long> awardedIds = userAchievements.stream()
-                .map(a -> a.getAward().getId())
-                .collect(Collectors.toList());
-
-        for (Award award : allAwards) {
-            if (awardedIds.contains(award.getId())) continue;
-
-            if (positiveDays >= award.getDaysRequired()) {
-                Achievement newAchievement = new Achievement();
-                newAchievement.setUser(user);
-                newAchievement.setAward(award);
-                newAchievement.setAwardedAt(Instant.now().getEpochSecond());
-                achievementRepository.save(newAchievement);
-            }
-        }
     }
 }
