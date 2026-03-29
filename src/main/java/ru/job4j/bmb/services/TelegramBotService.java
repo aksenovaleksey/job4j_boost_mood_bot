@@ -18,7 +18,7 @@ import ru.job4j.bmb.content.Content;
 import java.util.Optional;
 
 @Service
-@Conditional(RealModeCondition.class)  // ← Добавлено: активен только в реальном режиме
+@Conditional(RealModeCondition.class)
 public class TelegramBotService extends TelegramLongPollingBot implements SentContent {
 
     private final BotCommandHandler handler;
