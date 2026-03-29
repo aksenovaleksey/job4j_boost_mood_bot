@@ -1,6 +1,7 @@
 package ru.job4j.bmb.services;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
@@ -11,11 +12,13 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ru.job4j.bmb.config.condition.RealModeCondition;
 import ru.job4j.bmb.content.Content;
 
 import java.util.Optional;
 
 @Service
+@Conditional(RealModeCondition.class)  // ← Добавлено: активен только в реальном режиме
 public class TelegramBotService extends TelegramLongPollingBot implements SentContent {
 
     private final BotCommandHandler handler;
@@ -28,6 +31,7 @@ public class TelegramBotService extends TelegramLongPollingBot implements SentCo
         super(botToken);
         this.botName = botName;
         this.handler = handler;
+        System.out.println("✅ [REAL MODE] Инициализирован реальный бот: " + botName);
     }
 
     @Override
