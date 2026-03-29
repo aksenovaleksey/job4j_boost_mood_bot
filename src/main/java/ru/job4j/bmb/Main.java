@@ -18,7 +18,7 @@ import java.util.ArrayList;
 @SpringBootApplication
 @EnableScheduling
 @EnableAsync
-@EnableAspectJAutoProxy  // ← Добавлено для включения AOP
+@EnableAspectJAutoProxy
 public class Main {
 
     public static void main(String[] args) {
