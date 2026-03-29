@@ -1,5 +1,6 @@
 package ru.job4j.bmb.repositories;
 
+import org.springframework.stereotype.Component;
 import ru.job4j.bmb.model.Mood;
 import ru.job4j.bmb.repository.MoodRepository;
 
@@ -9,6 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Component("moodFakeRepository")
 public class MoodFakeRepository implements MoodRepository {
 
     protected final Map<Long, Mood> memory = new ConcurrentHashMap<>();

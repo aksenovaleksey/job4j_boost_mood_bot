@@ -1,5 +1,6 @@
 package ru.job4j.bmb.repositories;
 
+import org.springframework.stereotype.Component;
 import ru.job4j.bmb.model.MoodLog;
 import ru.job4j.bmb.model.User;
 import ru.job4j.bmb.repository.MoodLogRepository;
@@ -11,6 +12,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+@Component("moodLogFakeRepository")
 public class MoodLogFakeRepository implements MoodLogRepository {
 
     protected final Map<Long, MoodLog> memory = new ConcurrentHashMap<>();
@@ -120,3 +122,4 @@ public class MoodLogFakeRepository implements MoodLogRepository {
         return new ArrayList<>();
     }
 }
+
