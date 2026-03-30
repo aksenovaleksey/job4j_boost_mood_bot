@@ -3,6 +3,7 @@ package ru.job4j.bmb.content;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Map;
 
@@ -23,13 +24,17 @@ public class ContentProviderImage implements ContentProvider {
         try {
             var resource = new ClassPathResource(path);
             if (!resource.exists()) {
-                return new Content(chatId).setText("🖼️ Изображение временно недоступно");
+                return new Content(chatId).setPhoto(
+                        new InputFile(new ByteArrayInputStream(new byte[1]), path)
+                );
             }
             return new Content(chatId).setPhoto(
                     new InputFile(resource.getInputStream(), path)
             );
         } catch (IOException e) {
-            return new Content(chatId).setText("⚠️ Ошибка загрузки изображения");
+            return new Content(chatId).setPhoto(
+                    new InputFile(new ByteArrayInputStream(new byte[1]), path)
+            );
         }
     }
 }

@@ -7,13 +7,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import ru.job4j.bmb.model.*;
 import ru.job4j.bmb.repository.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 @EnableScheduling
@@ -51,42 +49,44 @@ public class Main {
             moodList.add(new Mood("Вдохновенное настроение 💡", true));
             moodList.add(new Mood("Раздраженное настроение 😠", false));
 
-            moodList = (ArrayList<Mood>) moodRepository.saveAll(moodList);
-            System.out.println("✅ Сохранено настроений: " + moodList.size());
+            Iterable<Mood> savedMoods = moodRepository.saveAll(moodList);
+            List<Mood> savedMoodList = new ArrayList<>();
+            savedMoods.forEach(savedMoodList::add);
+            System.out.println("✅ Сохранено настроений: " + savedMoodList.size());
 
             var moodContentList = new ArrayList<MoodContent>();
             moodContentList.add(new MoodContent(
-                    findMoodByName(moodList, "Счастливейший на свете 😎"),
+                    findMoodByName(savedMoodList, "Счастливейший на свете 😎"),
                     "Невероятно! Вы сияете от счастья, продолжайте радоваться жизни."));
             moodContentList.add(new MoodContent(
-                    findMoodByName(moodList, "Воодушевленное настроение 🌟"),
+                    findMoodByName(savedMoodList, "Воодушевленное настроение 🌟"),
                     "Великолепно! Вы чувствуете себя на высоте. Продолжайте в том же духе."));
             moodContentList.add(new MoodContent(
-                    findMoodByName(moodList, "Успокоение и гармония 🧘‍♂️"),
+                    findMoodByName(savedMoodList, "Успокоение и гармония 🧘‍♂️"),
                     "Потрясающе! Вы в состоянии внутреннего мира и гармонии."));
             moodContentList.add(new MoodContent(
-                    findMoodByName(moodList, "В состоянии комфорта ☺️"),
+                    findMoodByName(savedMoodList, "В состоянии комфорта ☺️"),
                     "Отлично! Вы чувствуете себя уютно и спокойно."));
             moodContentList.add(new MoodContent(
-                    findMoodByName(moodList, "Легкое волнение 🎈"),
+                    findMoodByName(savedMoodList, "Легкое волнение 🎈"),
                     "Замечательно! Немного волнения добавляет жизни краски."));
             moodContentList.add(new MoodContent(
-                    findMoodByName(moodList, "Сосредоточенное настроение 🎯"),
+                    findMoodByName(savedMoodList, "Сосредоточенное настроение 🎯"),
                     "Хорошо! Ваш фокус на высоте, используйте это время эффективно."));
             moodContentList.add(new MoodContent(
-                    findMoodByName(moodList, "Тревожное настроение 😟"),
+                    findMoodByName(savedMoodList, "Тревожное настроение 😟"),
                     "Не волнуйтесь, всё пройдет. Попробуйте расслабиться и найти источник вашего беспокойства."));
             moodContentList.add(new MoodContent(
-                    findMoodByName(moodList, "Разочарованное настроение 😞"),
+                    findMoodByName(savedMoodList, "Разочарованное настроение 😞"),
                     "Бывает. Не позволяйте разочарованию сбить вас с толку, всё наладится."));
             moodContentList.add(new MoodContent(
-                    findMoodByName(moodList, "Усталое настроение 😴"),
+                    findMoodByName(savedMoodList, "Усталое настроение 😴"),
                     "Похоже, вам нужен отдых. Позаботьтесь о себе и отдохните."));
             moodContentList.add(new MoodContent(
-                    findMoodByName(moodList, "Вдохновенное настроение 💡"),
+                    findMoodByName(savedMoodList, "Вдохновенное настроение 💡"),
                     "Потрясающе! Вы полны идей и энергии для их реализации."));
             moodContentList.add(new MoodContent(
-                    findMoodByName(moodList, "Раздраженное настроение 😠"),
+                    findMoodByName(savedMoodList, "Раздраженное настроение 😠"),
                     "Попробуйте успокоиться и найти причину раздражения, чтобы исправить ситуацию."));
 
             moodContentRepository.saveAll(moodContentList);
@@ -131,7 +131,7 @@ public class Main {
         };
     }
 
-    private Mood findMoodByName(ArrayList<Mood> moodList, String name) {
+    private Mood findMoodByName(List<Mood> moodList, String name) {
         return moodList.stream()
                 .filter(m -> name.equals(m.getName()))
                 .findFirst()
