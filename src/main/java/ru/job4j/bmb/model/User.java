@@ -17,6 +17,12 @@ public class User {
     @Column(name = "chat_id")
     private long chatId;
 
+    @Column(name = "daily_advice_enabled", columnDefinition = "boolean default true")
+    private boolean dailyAdviceEnabled = true;
+
+    @Column(name = "last_advice_date")
+    private Long lastAdviceDate;
+
     public User() {
     }
 
@@ -47,12 +53,30 @@ public class User {
         this.chatId = chatId;
     }
 
+    public boolean isDailyAdviceEnabled() {
+        return dailyAdviceEnabled;
+    }
+
+    public void setDailyAdviceEnabled(boolean dailyAdviceEnabled) {
+        this.dailyAdviceEnabled = dailyAdviceEnabled;
+    }
+
+    public Long getLastAdviceDate() {
+        return lastAdviceDate;
+    }
+
+    public void setLastAdviceDate(Long lastAdviceDate) {
+        this.lastAdviceDate = lastAdviceDate;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", clientId=" + clientId +
                 ", chatId=" + chatId +
+                ", dailyAdviceEnabled=" + dailyAdviceEnabled +
+                ", lastAdviceDate=" + lastAdviceDate +
                 '}';
     }
 

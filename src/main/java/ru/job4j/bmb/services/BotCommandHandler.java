@@ -15,13 +15,16 @@ public class BotCommandHandler {
     private final UserRepository userRepository;
     private final MoodService moodService;
     private final TgUI tgUI;
+    private final DailyAdviceService dailyAdviceService;
 
     public BotCommandHandler(UserRepository userRepository,
                              MoodService moodService,
-                             TgUI tgUI) {
+                             TgUI tgUI,
+                             DailyAdviceService dailyAdviceService) {
         this.userRepository = userRepository;
         this.moodService = moodService;
         this.tgUI = tgUI;
+        this.dailyAdviceService = dailyAdviceService;
     }
 
     public Optional<Content> commands(Message message) {
@@ -38,6 +41,10 @@ public class BotCommandHandler {
             case "/week_mood_log" -> moodService.weekMoodLogCommand(chatId, clientId);
             case "/month_mood_log" -> moodService.monthMoodLogCommand(chatId, clientId);
             case "/award" -> moodService.awards(chatId, clientId);
+            case "/daily_advice" -> Optional.of(dailyAdviceService.getDailyAdvice(chatId, clientId));
+            case "/settings" -> Optional.of(dailyAdviceService.getSettings(chatId, clientId));
+            case "/enable_advice" -> Optional.of(dailyAdviceService.toggleDailyAdvice(chatId, clientId, true));
+            case "/disable_advice" -> Optional.of(dailyAdviceService.toggleDailyAdvice(chatId, clientId, false));
             default -> Optional.empty();
         };
     }
