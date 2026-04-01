@@ -119,8 +119,8 @@ public class MoodService {
         List<Achievement> achievements = achievementRepository.findByUser(user);
         if (achievements.isEmpty()) {
             return Optional.of(new Content(chatId).setText(
-                    "🏆 У вас пока нет наград.\n\n" +
-                            "💡 Поддерживайте хорошее настроение, и вы получите первые достижения!"
+                    "🏆 У вас пока нет наград.\n\n"
+                            + "💡 Поддерживайте хорошее настроение, и вы получите первые достижения!"
             ));
         }
 

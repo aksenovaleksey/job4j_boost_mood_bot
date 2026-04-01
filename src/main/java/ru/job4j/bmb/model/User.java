@@ -75,13 +75,18 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", clientId=" + clientId +
-                ", chatId=" + chatId +
-                ", dailyAdviceEnabled=" + dailyAdviceEnabled +
-                ", lastAdviceDate=" + lastAdviceDate +
-                '}';
+        return "User{"
+                + "id="
+                + id
+                + ", clientId="
+                + clientId
+                + ", chatId="
+                + chatId
+                + ", dailyAdviceEnabled="
+                + dailyAdviceEnabled
+                + ", lastAdviceDate="
+                + lastAdviceDate
+                + '}';
     }
 
     @Override

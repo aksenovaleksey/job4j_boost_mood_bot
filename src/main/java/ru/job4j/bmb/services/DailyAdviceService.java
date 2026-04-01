@@ -70,7 +70,8 @@ public class DailyAdviceService {
         user.setLastAdviceDate(Instant.now().getEpochSecond());
         userRepository.save(user);
 
-        return new Content(chatId).setText("💡 Совет дня:\n\n" + advice);
+        return new Content(chatId).setText("💡 Совет дня:\n\n"
+                + advice);
     }
 
     private String generateAdviceForUser(User user) {
@@ -126,7 +127,8 @@ public class DailyAdviceService {
             if (canSendAutoAdvice(user)) {
                 String advice = generateAdviceForUser(user);
                 Content content = new Content(user.getChatId())
-                        .setText("🌅 Доброе утро! Совет дня:\n\n" + advice);
+                        .setText("🌅 Доброе утро! Совет дня:\n\n"
+                                + advice);
                 sentContent.sent(content);
 
                 user.setLastAdviceDate(Instant.now().getEpochSecond());
@@ -137,7 +139,8 @@ public class DailyAdviceService {
 
     public Content toggleDailyAdvice(Long chatId, Long clientId, boolean enable) {
         User user = userRepository.findByChatIdAndClientId(chatId, clientId)
-                .orElseThrow(() -> new RuntimeException("User not found: chatId=" + chatId));
+                .orElseThrow(() -> new RuntimeException("User not found: chatId="
+                        + chatId));
 
         user.setDailyAdviceEnabled(enable);
         userRepository.save(user);
@@ -151,15 +154,17 @@ public class DailyAdviceService {
 
     public Content getSettings(Long chatId, Long clientId) {
         User user = userRepository.findByChatIdAndClientId(chatId, clientId)
-                .orElseThrow(() -> new RuntimeException("User not found: chatId=" + chatId));
+                .orElseThrow(() -> new RuntimeException("User not found: chatId="
+                        + chatId));
 
         String status = user.isDailyAdviceEnabled() ? "✅ Включено" : "❌ Выключено";
-        String text = "⚙️ Настройки бота:\n\n" +
-                "📬 Автоматические советы: " + status + "\n\n" +
-                "Управление:\n" +
-                "/enable_advice — включить авто-советы\n" +
-                "/disable_advice — выключить авто-советы\n" +
-                "/daily_advice — получить совет вручную";
+        String text = "⚙️ Настройки бота:\n\n"
+                + "📬 Автоматические советы: "
+                + status + "\n\n"
+                + "Управление:\n"
+                + "/enable_advice — включить авто-советы\n"
+                + "/disable_advice — выключить авто-советы\n"
+                + "/daily_advice — получить совет вручную";
 
         return new Content(chatId).setText(text);
     }

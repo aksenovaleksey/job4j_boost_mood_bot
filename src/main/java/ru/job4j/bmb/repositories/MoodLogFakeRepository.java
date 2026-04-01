@@ -104,19 +104,20 @@ public class MoodLogFakeRepository implements MoodLogRepository {
     @Override
     public List<MoodLog> findByUser(User user) {
         return memory.values().stream()
-                .filter(log -> user.getId() != null &&
-                        log.getUser() != null &&
-                        log.getUser().getId().equals(user.getId()))
+                .filter(log -> user.getId() != null
+                        && log.getUser() != null
+                        && log.getUser().getId().equals(user.getId()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<MoodLog> findByUserAndCreatedAtAfter(User user, Long timestamp) {
         return memory.values().stream()
-                .filter(log -> user.getId() != null &&
-                        log.getUser() != null &&
-                        log.getUser().getId().equals(user.getId()))
-                .filter(log -> log.getCreatedAt() != null && log.getCreatedAt() > timestamp)
+                .filter(log -> user.getId() != null
+                        && log.getUser() != null
+                        && log.getUser().getId().equals(user.getId()))
+                .filter(log -> log.getCreatedAt() != null
+                        && log.getCreatedAt() > timestamp)
                 .collect(Collectors.toList());
     }
 

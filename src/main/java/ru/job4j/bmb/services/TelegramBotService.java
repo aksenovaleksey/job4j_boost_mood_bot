@@ -39,7 +39,8 @@ public class TelegramBotService extends TelegramLongPollingBot implements SentCo
         if (update.hasCallbackQuery()) {
             CallbackQuery callback = update.getCallbackQuery();
             handler.handleCallback(callback).ifPresent(this::sent);
-        } else if (update.hasMessage() && update.getMessage().hasText()) {
+        } else if (update.hasMessage()
+                && update.getMessage().hasText()) {
             Message message = update.getMessage();
             handler.commands(message).ifPresent(this::sent);
         }
@@ -57,7 +58,8 @@ public class TelegramBotService extends TelegramLongPollingBot implements SentCo
                 SendAudio sendAudio = new SendAudio();
                 sendAudio.setChatId(String.valueOf(content.getChatId()));
                 sendAudio.setAudio(content.getAudio());
-                if (content.getText() != null && !content.getText().isEmpty()) {
+                if (content.getText() != null
+                        && !content.getText().isEmpty()) {
                     sendAudio.setCaption(content.getText());
                 }
                 execute(sendAudio);
@@ -68,7 +70,8 @@ public class TelegramBotService extends TelegramLongPollingBot implements SentCo
                 SendPhoto sendPhoto = new SendPhoto();
                 sendPhoto.setChatId(String.valueOf(content.getChatId()));
                 sendPhoto.setPhoto(content.getPhoto());
-                if (content.getText() != null && !content.getText().isEmpty()) {
+                if (content.getText() != null
+                        && !content.getText().isEmpty()) {
                     sendPhoto.setCaption(content.getText());
                 }
                 execute(sendPhoto);
@@ -79,7 +82,8 @@ public class TelegramBotService extends TelegramLongPollingBot implements SentCo
                 SendVideo sendVideo = new SendVideo();
                 sendVideo.setChatId(String.valueOf(content.getChatId()));
                 sendVideo.setVideo(content.getVideo());
-                if (content.getText() != null && !content.getText().isEmpty()) {
+                if (content.getText() != null
+                        && !content.getText().isEmpty()) {
                     sendVideo.setCaption(content.getText());
                 }
                 execute(sendVideo);
