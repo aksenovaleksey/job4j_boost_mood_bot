@@ -76,9 +76,9 @@ public class AchievementService {
                 achievementRepository.save(newAchievement);
 
                 Content notification = new Content(user.getChatId());
-                notification.setText("🎉 Поздравляем! Вы получили достижение:\n\n" +
-                        "🏆 " + award.getName() + "\n" +
-                        "📝 " + award.getDescription());
+                notification.setText("🎉 Поздравляем! Вы получили достижение:\n\n"
+                        + "🏆 " + award.getName() + "\n"
+                        + "📝 " + award.getDescription());
                 sentContent.sent(notification);
             }
         }

@@ -24,7 +24,7 @@ class RecommendationEngineTest {
     private RecommendationEngine recommendationEngine;
 
     @Test
-    void whenRecommendFor_thenReturnsContentWithChatId() {
+    void whenRecommendForThenReturnsContentWithChatId() {
         Long chatId = 12345L;
         Long moodId = 1L;
 
@@ -35,7 +35,7 @@ class RecommendationEngineTest {
     }
 
     @Test
-    void whenRecommendByTypeText_thenReturnsTextContent() {
+    void whenRecommendByTypeTextThenReturnsTextContent() {
         Long chatId = 67890L;
         Long moodId = 3L;
 
@@ -49,7 +49,7 @@ class RecommendationEngineTest {
     }
 
     @Test
-    void whenRecommendByTypeImage_thenReturnsImageContent() {
+    void whenRecommendByTypeImageThenReturnsImageContent() {
         Long chatId = 11111L;
         Long moodId = 2L;
 
@@ -62,7 +62,7 @@ class RecommendationEngineTest {
     }
 
     @Test
-    void whenRecommendByTypeAudio_thenReturnsAudioContent() {
+    void whenRecommendByTypeAudioThenReturnsAudioContent() {
         Long chatId = 22222L;
         Long moodId = 4L;
 
@@ -75,7 +75,7 @@ class RecommendationEngineTest {
     }
 
     @Test
-    void whenMoodIdNotFound_thenReturnsDefaultContent() {
+    void whenMoodIdNotFoundThenReturnsDefaultContent() {
         Long chatId = 99999L;
         Long unknownMoodId = 999L;
 

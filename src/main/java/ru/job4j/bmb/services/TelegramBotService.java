@@ -55,49 +55,19 @@ public class TelegramBotService extends TelegramLongPollingBot implements SentCo
     public void sent(Content content) {
         try {
             if (content.getAudio() != null) {
-                SendAudio sendAudio = new SendAudio();
-                sendAudio.setChatId(String.valueOf(content.getChatId()));
-                sendAudio.setAudio(content.getAudio());
-                if (content.getText() != null
-                        && !content.getText().isEmpty()) {
-                    sendAudio.setCaption(content.getText());
-                }
-                execute(sendAudio);
+                sendAudio(content);
                 return;
             }
-
             if (content.getPhoto() != null) {
-                SendPhoto sendPhoto = new SendPhoto();
-                sendPhoto.setChatId(String.valueOf(content.getChatId()));
-                sendPhoto.setPhoto(content.getPhoto());
-                if (content.getText() != null
-                        && !content.getText().isEmpty()) {
-                    sendPhoto.setCaption(content.getText());
-                }
-                execute(sendPhoto);
+                sendPhoto(content);
                 return;
             }
-
             if (content.getVideo() != null) {
-                SendVideo sendVideo = new SendVideo();
-                sendVideo.setChatId(String.valueOf(content.getChatId()));
-                sendVideo.setVideo(content.getVideo());
-                if (content.getText() != null
-                        && !content.getText().isEmpty()) {
-                    sendVideo.setCaption(content.getText());
-                }
-                execute(sendVideo);
+                sendVideo(content);
                 return;
             }
-
             if (content.getText() != null && !content.getText().isEmpty()) {
-                SendMessage sendMessage = new SendMessage();
-                sendMessage.setChatId(String.valueOf(content.getChatId()));
-                sendMessage.setText(content.getText());
-                if (content.getMarkup() != null) {
-                    sendMessage.setReplyMarkup(content.getMarkup());
-                }
-                execute(sendMessage);
+                sendText(content);
             }
         } catch (TelegramApiException e) {
             throw new SentContentException(
@@ -105,6 +75,46 @@ public class TelegramBotService extends TelegramLongPollingBot implements SentCo
                     e
             );
         }
+    }
+
+    private void sendAudio(Content content) throws TelegramApiException {
+        SendAudio sendAudio = new SendAudio();
+        sendAudio.setChatId(String.valueOf(content.getChatId()));
+        sendAudio.setAudio(content.getAudio());
+        if (content.getText() != null && !content.getText().isEmpty()) {
+            sendAudio.setCaption(content.getText());
+        }
+        execute(sendAudio);
+    }
+
+    private void sendPhoto(Content content) throws TelegramApiException {
+        SendPhoto sendPhoto = new SendPhoto();
+        sendPhoto.setChatId(String.valueOf(content.getChatId()));
+        sendPhoto.setPhoto(content.getPhoto());
+        if (content.getText() != null && !content.getText().isEmpty()) {
+            sendPhoto.setCaption(content.getText());
+        }
+        execute(sendPhoto);
+    }
+
+    private void sendVideo(Content content) throws TelegramApiException {
+        SendVideo sendVideo = new SendVideo();
+        sendVideo.setChatId(String.valueOf(content.getChatId()));
+        sendVideo.setVideo(content.getVideo());
+        if (content.getText() != null && !content.getText().isEmpty()) {
+            sendVideo.setCaption(content.getText());
+        }
+        execute(sendVideo);
+    }
+
+    private void sendText(Content content) throws TelegramApiException {
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(String.valueOf(content.getChatId()));
+        sendMessage.setText(content.getText());
+        if (content.getMarkup() != null) {
+            sendMessage.setReplyMarkup(content.getMarkup());
+        }
+        execute(sendMessage);
     }
 
     public void receive(Content content) {

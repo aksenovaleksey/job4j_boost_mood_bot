@@ -36,7 +36,7 @@ class DailyAdviceServiceTest {
     private DailyAdviceService dailyAdviceService;
 
     @Test
-    void whenGetDailyAdvice_thenReturnsContentWithAdvice() {
+    void whenGetDailyAdviceThenReturnsContentWithAdvice() {
         User user = new User();
         user.setId(1L);
         user.setClientId(123L);
@@ -57,7 +57,7 @@ class DailyAdviceServiceTest {
     }
 
     @Test
-    void whenToggleDailyAdviceEnable_thenUpdatesUserSetting() {
+    void whenToggleDailyAdviceEnableThenUpdatesUserSetting() {
         User user = new User();
         user.setId(2L);
         user.setClientId(789L);
@@ -77,7 +77,7 @@ class DailyAdviceServiceTest {
     }
 
     @Test
-    void whenToggleDailyAdviceDisable_thenUpdatesUserSetting() {
+    void whenToggleDailyAdviceDisableThenUpdatesUserSetting() {
         User user = new User();
         user.setId(3L);
         user.setClientId(111L);
@@ -95,7 +95,7 @@ class DailyAdviceServiceTest {
     }
 
     @Test
-    void whenGetSettings_thenReturnsSettingsContent() {
+    void whenGetSettingsThenReturnsSettingsContent() {
         User user = new User();
         user.setId(4L);
         user.setClientId(333L);
@@ -113,7 +113,7 @@ class DailyAdviceServiceTest {
     }
 
     @Test
-    void whenCanSendAutoAdvice_withEnabledAndNoPreviousAdvice_thenReturnsTrue() {
+    void whenCanSendAutoAdviceWithEnabledAndNoPreviousAdviceThenReturnsTrue() {
         User user = new User();
         user.setDailyAdviceEnabled(true);
         user.setLastAdviceDate(null);
@@ -124,7 +124,7 @@ class DailyAdviceServiceTest {
     }
 
     @Test
-    void whenCanSendAutoAdvice_withDisabled_thenReturnsFalse() {
+    void whenCanSendAutoAdviceWithDisabledThenReturnsFalse() {
         User user = new User();
         user.setDailyAdviceEnabled(false);
         user.setLastAdviceDate(Instant.now().getEpochSecond());
@@ -135,7 +135,7 @@ class DailyAdviceServiceTest {
     }
 
     @Test
-    void whenCanSendAutoAdvice_withTodayAlreadySent_thenReturnsFalse() {
+    void whenCanSendAutoAdviceWithTodayAlreadySentThenReturnsFalse() {
         User user = new User();
         user.setDailyAdviceEnabled(true);
         user.setLastAdviceDate(Instant.now().getEpochSecond());
@@ -146,7 +146,7 @@ class DailyAdviceServiceTest {
     }
 
     @Test
-    void whenGenerateAdvice_withPositiveMood_thenReturnsPositiveAdvice() {
+    void whenGenerateAdviceWithPositiveMoodThenReturnsPositiveAdvice() {
         User user = new User();
         user.setId(5L);
         user.setClientId(555L);
@@ -167,7 +167,7 @@ class DailyAdviceServiceTest {
     }
 
     @Test
-    void whenGenerateAdvice_withNegativeMood_thenReturnsSupportiveAdvice() {
+    void whenGenerateAdviceWithNegativeMoodThenReturnsSupportiveAdvice() {
         User user = new User();
         user.setId(6L);
         user.setClientId(777L);

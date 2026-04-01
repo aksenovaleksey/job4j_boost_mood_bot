@@ -14,7 +14,7 @@ import java.util.Arrays;
 @Component
 public class LoggingAspect {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingAspect.class);
 
     @Pointcut("execution(* ru.job4j.bmb.services.*.*(..))")
     private void serviceLayer() {
@@ -26,7 +26,7 @@ public class LoggingAspect {
         String className = joinPoint.getSignature().getDeclaringTypeName();
         Object[] args = joinPoint.getArgs();
 
-        logger.debug("Вызов метода: {}.{} с аргументами: {}",
+        LOGGER.debug("Вызов метода: {}.{} с аргументами: {}",
                 className, methodName, Arrays.toString(args));
     }
 }
