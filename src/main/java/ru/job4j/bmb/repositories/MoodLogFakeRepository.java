@@ -64,11 +64,13 @@ public class MoodLogFakeRepository implements MoodLogRepository {
 
     @Override
     public long count() {
+
         return memory.size();
     }
 
     @Override
     public void deleteById(Long id) {
+
         memory.remove(id);
     }
 
@@ -95,6 +97,7 @@ public class MoodLogFakeRepository implements MoodLogRepository {
 
     @Override
     public void deleteAll() {
+
         memory.clear();
     }
 
@@ -119,6 +122,7 @@ public class MoodLogFakeRepository implements MoodLogRepository {
 
     @Override
     public List<User> findUsersWhoDidNotVoteToday(long startOfDay, long endOfDay) {
+
         return new ArrayList<>();
     }
 }

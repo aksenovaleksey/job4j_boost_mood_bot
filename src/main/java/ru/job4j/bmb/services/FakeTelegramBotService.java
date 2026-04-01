@@ -48,6 +48,7 @@ public class FakeTelegramBotService extends TelegramLongPollingBot implements Se
 
     @Override
     public String getBotUsername() {
+
         return botName;
     }
 

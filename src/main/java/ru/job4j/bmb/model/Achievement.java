@@ -20,7 +20,8 @@ public class Achievement {
     @Column(name = "awarded_at")
     private Long awardedAt;
 
-    public Achievement() {}
+    public Achievement() {
+    }
 
     public Achievement(User user, Award award, Long awardedAt) {
         this.user = user;
@@ -31,6 +32,7 @@ public class Achievement {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -38,6 +40,7 @@ public class Achievement {
     public User getUser() {
         return user;
     }
+
     public void setUser(User user) {
         this.user = user;
     }
@@ -45,6 +48,7 @@ public class Achievement {
     public Award getAward() {
         return award;
     }
+
     public void setAward(Award award) {
         this.award = award;
     }
@@ -52,6 +56,7 @@ public class Achievement {
     public Long getAwardedAt() {
         return awardedAt;
     }
+
     public void setAwardedAt(Long awardedAt) {
         this.awardedAt = awardedAt;
     }

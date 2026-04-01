@@ -1,6 +1,7 @@
 package ru.job4j.bmb.model;
 
 import jakarta.persistence.*;
+
 import java.util.Objects;
 
 @Entity
@@ -35,6 +36,7 @@ public class User {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -42,6 +44,7 @@ public class User {
     public long getClientId() {
         return clientId;
     }
+
     public void setClientId(long clientId) {
         this.clientId = clientId;
     }
@@ -49,6 +52,7 @@ public class User {
     public long getChatId() {
         return chatId;
     }
+
     public void setChatId(long chatId) {
         this.chatId = chatId;
     }

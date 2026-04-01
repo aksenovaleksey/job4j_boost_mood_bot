@@ -1,6 +1,7 @@
 package ru.job4j.bmb.content;
 
 import org.springframework.stereotype.Component;
+
 import java.util.Map;
 
 @Component

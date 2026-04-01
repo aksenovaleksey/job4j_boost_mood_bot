@@ -22,22 +22,27 @@ public class AppConfig {
     private int timeout;
 
     public String getBotName() {
+
         return botName;
     }
 
     public String getBotToken() {
+
         return botToken;
     }
 
     public String getAppVersion() {
+
         return appVersion;
     }
 
     public String getAppUrl() {
+
         return appUrl;
     }
 
     public int getTimeout() {
+
         return timeout;
     }
 

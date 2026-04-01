@@ -36,16 +36,19 @@ public class MoodFakeRepository implements MoodRepository {
 
     @Override
     public Optional<Mood> findById(Long id) {
+
         return Optional.ofNullable(memory.get(id));
     }
 
     @Override
     public boolean existsById(Long id) {
+
         return memory.containsKey(id);
     }
 
     @Override
     public List<Mood> findAll() {
+
         return new ArrayList<>(memory.values());
     }
 
@@ -62,11 +65,13 @@ public class MoodFakeRepository implements MoodRepository {
 
     @Override
     public long count() {
+
         return memory.size();
     }
 
     @Override
     public void deleteById(Long id) {
+
         memory.remove(id);
     }
 
@@ -93,6 +98,7 @@ public class MoodFakeRepository implements MoodRepository {
 
     @Override
     public void deleteAll() {
+
         memory.clear();
     }
 }

@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface MoodRepository extends CrudRepository<Mood, Long> {
     @Override
-    List<Mood> findAll();  // ← Обязательно List, не Iterable
+    List<Mood> findAll();
 }

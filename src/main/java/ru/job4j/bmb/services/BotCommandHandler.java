@@ -66,6 +66,7 @@ public class BotCommandHandler {
     }
 
     public Optional<Content> receive(Content content) {
+
         return Optional.empty();
     }
 

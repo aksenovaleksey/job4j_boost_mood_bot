@@ -3,6 +3,7 @@ package ru.job4j.bmb.content;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Map;

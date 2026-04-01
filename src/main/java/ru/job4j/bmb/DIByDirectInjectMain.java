@@ -11,7 +11,6 @@ public class DIByDirectInjectMain {
         System.out.println("⚠️ Ручная инъекция зависимостей без Spring контекста не рекомендуется.");
         System.out.println("✅ Для запуска бота используйте класс Main с Spring Boot.");
 
-        // Используем Spring контекст даже для тестового запуска
         try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
             context.register(Main.class);
             context.refresh();

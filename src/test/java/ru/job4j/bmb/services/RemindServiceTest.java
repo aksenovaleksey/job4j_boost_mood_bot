@@ -21,6 +21,7 @@ class RemindServiceTest {
         var sentContent = new SentContent() {
             @Override
             public void sent(Content content) {
+
                 result.add(content);
             }
         };

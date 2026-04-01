@@ -16,7 +16,8 @@ public class MoodContent {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    public MoodContent() {}
+    public MoodContent() {
+    }
 
     public MoodContent(Mood mood, String content) {
         this.mood = mood;
@@ -24,21 +25,32 @@ public class MoodContent {
     }
 
     public Long getId() {
+
         return id;
     }
+
     public void setId(Long id) {
+
         this.id = id;
     }
+
     public Mood getMood() {
+
         return mood;
     }
+
     public void setMood(Mood mood) {
+
         this.mood = mood;
     }
+
     public String getContent() {
+
         return content;
     }
+
     public void setContent(String content) {
+
         this.content = content;
     }
 }

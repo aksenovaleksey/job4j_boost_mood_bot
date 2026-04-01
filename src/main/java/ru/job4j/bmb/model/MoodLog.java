@@ -20,7 +20,8 @@ public class MoodLog {
     @Column(name = "created_at")
     private Long createdAt;
 
-    public MoodLog() {}
+    public MoodLog() {
+    }
 
     public MoodLog(User user, Mood mood, Long createdAt) {
         this.user = user;
@@ -31,28 +32,39 @@ public class MoodLog {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
+
         this.id = id;
     }
 
     public User getUser() {
+
         return user;
     }
+
     public void setUser(User user) {
+
         this.user = user;
     }
 
     public Mood getMood() {
+
         return mood;
     }
+
     public void setMood(Mood mood) {
+
         this.mood = mood;
     }
 
     public Long getCreatedAt() {
+
         return createdAt;
     }
+
     public void setCreatedAt(Long createdAt) {
+
         this.createdAt = createdAt;
     }
 }
